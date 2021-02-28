@@ -1,0 +1,55 @@
+.\" Copyright (c) 2002 Stephen Forrest
+.\"
+.TH deogol 1 "0.1" "2002-September-24" "Deogol Reference"
+.SH NAME
+deogol \- HTML steganography tool
+.SH SYNOPSIS
+.B deogol.pl [-cdes]
+[\fB\-f\fR \fIcustom_filter\fR] 
+[\fB\--noise\fR]
+[\fImessage_file\fR]
+
+.SH DESCRIPTION
+Deogol embeds a small message into an HTML container file without increasing
+its size or changing the non-tag text of the file.  An HTML container file
+produced by Deogol (containing an embedded secret message) will be
+indistinguishable by a browser from the original HTML file used to produce it.
+
+The container file is read from stdin.  The message is supplied as a
+commandline parameter (see above) and the modified container is written to
+stdout.
+.SH OPTIONS
+.TP
+.B "\-c,\-\-capacity"
+Print the capacity of the container in bytes and exit.
+.TP
+.B "\-d,\-\-decode"
+Decode a message from the container file, and write it to the message file supplied.
+.TP
+.B "\-e,\-\-encode"
+[Default] Read a message from the message file supplied, and encode it in the container file.
+.TP
+.B "\-f,\-\-filter"
+If in encoding mode, run the message through \fIcustom_filter\fR
+before encoding.  If in decoding mode, run the extracted message
+through \fIcustom_filter\fR after decoding.
+
+Filters must accept input on stdin and write output to stdout, e.g. the -f
+option must be used with gzip and gunzip if used as a filter. 
+
+The command \fIcustom_filter\fR may be any valid UNIX command, including
+a sequence of piped commands; if a pipe or other character meaningful to the
+shell is used, \fIcustom_filter\fR must be quoted.
+.TP
+.B "\-s,\-\-size"
+Print the size of the message in bytes and exit.  Note this is not necessarily
+this size of \fImessage file\fR, but the size of the message after any filter
+has been run.
+.TP
+.B "\-\-noise, \-\-random"
+Generate random data and fill the container with it.
+.SH "SEE ALSO"
+The Deogol main page, <\fIhttp://wandership.ca/projects/deogol/\fR>. 
+.SH AUTHOR
+Stephen Forrest <\fIstephen.forrest@gmail.com\fR>.
+.fi
